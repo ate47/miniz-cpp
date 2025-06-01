@@ -4971,14 +4971,14 @@ namespace miniz_cpp {
 namespace detail {
 
 #ifdef _WIN32
-char directory_separator = '\\';
-char alt_directory_separator = '/';
+constexpr char directory_separator = '\\';
+constexpr char alt_directory_separator = '/';
 #else
-char directory_separator = '/';
-char alt_directory_separator = '\\';
+constexpr char directory_separator = '/';
+constexpr char alt_directory_separator = '\\';
 #endif
 
-std::string join_path(const std::vector<std::string> &parts)
+static std::string join_path(const std::vector<std::string> &parts)
 {
     std::string joined;
     std::size_t i = 0;
@@ -4994,7 +4994,7 @@ std::string join_path(const std::vector<std::string> &parts)
     return joined;
 }
     
-std::vector<std::string> split_path(const std::string &path, char delim = directory_separator)
+static std::vector<std::string> split_path(const std::string &path, char delim = directory_separator)
 {
     std::vector<std::string> split;
     std::string::size_type previous_index = 0;
@@ -5029,7 +5029,7 @@ std::vector<std::string> split_path(const std::string &path, char delim = direct
     return split;
 }
     
-uint32_t crc32buf(const char *buf, std::size_t len)
+static uint32_t crc32buf(const char *buf, std::size_t len)
 {
     uint32_t oldcrc32 = 0xFFFFFFFF;
     
@@ -5090,7 +5090,7 @@ uint32_t crc32buf(const char *buf, std::size_t len)
     return ~oldcrc32;
 }
 
-tm safe_localtime(const time_t &t)
+static tm safe_localtime(const time_t &t)
 {
 #ifdef _WIN32
     tm time;
@@ -5103,7 +5103,7 @@ tm safe_localtime(const time_t &t)
 #endif
 }
 
-std::size_t write_callback(void *opaque, std::uint64_t file_ofs, const void *pBuf, std::size_t n)
+static std::size_t write_callback(void *opaque, std::uint64_t file_ofs, const void *pBuf, std::size_t n)
 {
     auto buffer = static_cast<std::vector<char> *>(opaque);
     
